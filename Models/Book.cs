@@ -25,6 +25,7 @@ namespace Popoviciu_Andreea_Lab2.Models
         public Publisher? Publisher { get; set; }
 
         public ICollection<BookCategory>? BookCategories { get; set; }
+        //public int? CategoryID { get; set; }
 
 
     }

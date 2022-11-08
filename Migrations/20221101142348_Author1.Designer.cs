@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Popoviciu_Andreea_Lab2.Data;
 
@@ -11,9 +12,10 @@ using Popoviciu_Andreea_Lab2.Data;
 namespace Popoviciu_Andreea_Lab2.Migrations
 {
     [DbContext(typeof(Popoviciu_Andreea_Lab2Context))]
-    partial class Popoviciu_Andreea_Lab2ContextModelSnapshot : ModelSnapshot
+    [Migration("20221101142348_Author1")]
+    partial class Author1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +56,6 @@ namespace Popoviciu_Andreea_Lab2.Migrations
                     b.Property<int?>("AuthorID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryID")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
@@ -73,8 +72,6 @@ namespace Popoviciu_Andreea_Lab2.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("AuthorID");
-
-                    b.HasIndex("CategoryID");
 
                     b.HasIndex("PublisherID");
 
@@ -144,10 +141,6 @@ namespace Popoviciu_Andreea_Lab2.Migrations
                         .WithMany("Books")
                         .HasForeignKey("AuthorID");
 
-                    b.HasOne("Popoviciu_Andreea_Lab2.Models.Category", null)
-                        .WithMany("Books")
-                        .HasForeignKey("CategoryID");
-
                     b.HasOne("Popoviciu_Andreea_Lab2.Models.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherID");
@@ -189,8 +182,6 @@ namespace Popoviciu_Andreea_Lab2.Migrations
             modelBuilder.Entity("Popoviciu_Andreea_Lab2.Models.Category", b =>
                 {
                     b.Navigation("BookCategories");
-
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Popoviciu_Andreea_Lab2.Models.Publisher", b =>

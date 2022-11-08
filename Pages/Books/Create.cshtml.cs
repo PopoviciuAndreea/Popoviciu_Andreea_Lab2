@@ -21,9 +21,15 @@ namespace Popoviciu_Andreea_Lab2.Pages.Books
 
         public IActionResult OnGet()
         {
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID", "AuthorName");
+            var authorList = _context.Author.Select(x => new
+            {
+                x.ID,
+                FullName = x.FirstName + " " + x.LastName
+            });
+            ViewData["AuthorID"] = new SelectList(authorList, "ID", "FullName");
 
+            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+           
             var book = new Book();
             book.BookCategories = new List<BookCategory>();
             PopulateAssignedCategoryData(_context, book);
@@ -39,7 +45,7 @@ namespace Popoviciu_Andreea_Lab2.Pages.Books
 
         public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
-            var newBook = new Book();
+            var newBook = Book;
             if (selectedCategories != null)
             {
                 newBook.BookCategories = new List<BookCategory>();
@@ -52,16 +58,20 @@ namespace Popoviciu_Andreea_Lab2.Pages.Books
                     newBook.BookCategories.Add(catToAdd);
                 }
             }
-            if (await TryUpdateModelAsync<Book>(
-            newBook,
-            "Book",
-            i => i.Title, i => i.Author,
-            i => i.Price, i => i.PublishingDate, i => i.PublisherID))
-            {
-                _context.Book.Add(newBook);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
-            }
+            // if (await TryUpdateModelAsync<Book>(
+            //newBook,
+            //"Book",
+            //i => i.Title, i => i.Author,
+            //i => i.Price, i => i.PublishingDate, i => i.PublisherID))
+            //{
+            //    _context.Book.Add(newBook);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToPage("./Index");
+            //}
+
+            _context.Book.Add(newBook);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
             PopulateAssignedCategoryData(_context, newBook);
             return Page();
         }
