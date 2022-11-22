@@ -9,6 +9,10 @@ namespace Popoviciu_Andreea_Lab2.Models
         public int ID { get; set; }
 
         [Display(Name = "Book Title")]
+
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s-]*$", ErrorMessage =
+            "Titlul trebuie sa inceapa cu majuscula (ex. Ion)")]
+        [StringLength(150, MinimumLength = 3)]
         public string Title { get; set; }
 
         public int? AuthorID { get; set; }
@@ -16,6 +20,7 @@ namespace Popoviciu_Andreea_Lab2.Models
 
 
         [Column(TypeName = "decimal(6, 2)")]
+        [Range(0.01, 500)]
         public decimal Price { get; set; }
 
         [DataType(DataType.Date)]
@@ -25,7 +30,7 @@ namespace Popoviciu_Andreea_Lab2.Models
         public Publisher? Publisher { get; set; }
 
         public ICollection<BookCategory>? BookCategories { get; set; }
-        //public int? CategoryID { get; set; }
+ 
 
 
     }
